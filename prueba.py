@@ -17,24 +17,27 @@ model = utils.apply_modifications(model)
 model.summary()
 
 
-layer_name = 'block1_conv2'
-layer_idx = utils.find_layer_idx(model, layer_name)
+layer_names = ['block1_conv1', 'block1_conv2', 'block2_conv1', 'block2_conv2','block3_conv1',
+                'block3_conv2','block3_conv3','block4_conv1','block4_conv1','block4_conv3',
+                'block5_conv1','block5_conv2','block5_conv3']
+for layer_name in layer_names:
+    layer_idx = utils.find_layer_idx(model, layer_name)
 
-# Visualize all filters in this layer.
-filters = np.arange(get_num_filters(model.layers[layer_idx]))
+    # Visualize all filters in this layer.
+    filters = np.arange(get_num_filters(model.layers[layer_idx]))
 
-vis_images = []
-for idx in filters:
-    img = visualize_activation(model, layer_idx, filter_indices=idx)
-    
-    # Utility to overlay text on image.
-    img = utils.draw_text(img, 'Filter {}'.format(idx))    
-    vis_images.append(img)
+    vis_images = []
+    for idx in filters:
+        img = visualize_activation(model, layer_idx, filter_indices=idx)
+        
+        # Utility to overlay text on image.
+        img = utils.draw_text(img, 'Filter {}'.format(idx))    
+        vis_images.append(img)
 
-# Generate stitched image palette with 8 cols.
-stitched = utils.stitch_images(vis_images, cols=8)    
-plt.axis('off')
-plt.imshow(stitched)
-plt.title(layer_name)
-plt.savefig(layer_name + ".png", dpi=450)
-plt.show()
+    # Generate stitched image palette with 8 cols.
+    stitched = utils.stitch_images(vis_images, cols=8)    
+    plt.axis('off')
+    plt.imshow(stitched)
+    plt.title(layer_name)
+    plt.savefig(layer_name + ".png", dpi=1500)
+    #plt.show()
