@@ -20,8 +20,7 @@ model = utils.apply_modifications(model)
 model.summary()
 
 
-layer_names = ['block4_conv3',
-                'block5_conv1','block5_conv2','block5_conv3']
+layer_names = ['block5_conv2','block5_conv3']
 for layer_name in layer_names:
     layer_idx = utils.find_layer_idx(model, layer_name)
 
