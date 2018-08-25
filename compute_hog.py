@@ -31,13 +31,14 @@ for directorio in [x[0] for x in os.walk('.')]:
 
 os.chdir("..")
 
+
 print("Empieza el cluster")
 
-#clustering = MeanShift()
-clustering = KMeans(n_clusters=5)
+clustering = MeanShift()
+#clustering = KMeans(n_clusters=6)
 clustering.fit(descriptores)
 
-f = open("clusters_k_5.txt", "w")
+f = open("clusters_meanshift.txt", "w")
 
 for i in range(len(clustering.labels_)):
     print(nombres[i] + ": " + str(clustering.labels_[i]))

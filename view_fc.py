@@ -6,6 +6,7 @@ from matplotlib import pyplot as plt
 from vis.input_modifiers import Jitter
 import numpy as np
 import os
+import cv2
 
 categorias = np.random.permutation(1000)[:15]
 
@@ -23,6 +24,4 @@ if not os.path.isdir("fc"):
 for categoria in categorias:
     img = visualize_activation(model, layer_idx, filter_indices=categoria,max_iter=500, input_modifiers=[Jitter(16)])
     img = utils.draw_text(img, utils.get_imagenet_label(categoria))
-    plt.imshow(img)
-    plt.savefig("fc/" + utils.get_imagenet_label(categoria)+ ".png", dpi=3000)
-    #plt.show()
+    cv2.imwrite("fc/" + utils.get_imagenet_label(categoria)+ ".png", img)
