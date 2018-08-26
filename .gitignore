@@ -1,3 +1,4 @@
 .vscode/settings.json
 descriptores/**
 clusters/*/
+GUI/__pycache__/main_canvas.cpython-36.pyc
