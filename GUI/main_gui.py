@@ -35,8 +35,9 @@ class MainWindow():
     def openfile(self):
         path = filedialog.askopenfilename(title="Select image")
         if path is not "":
-            img = cv2.cvtColor(cv2.imread(path),cv2.COLOR_BGR2RGB)
-            self.mainCanvas.new_image(PIL.ImageTk.PhotoImage(image=PIL.Image.fromarray(cv2.resize(img, (448,448)))))
+            img = cv2.imread(path)
+            img2 = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+            self.mainCanvas.new_image(PIL.ImageTk.PhotoImage(image=PIL.Image.fromarray(cv2.resize(img2, (448,448)))))
             self.keras_handler.initialize(cv2.resize(img, (224,224)))
 
     def info(self):

@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 from vis.utils import utils
 from vis.visualization import get_num_filters
 from keras import backend as K
+import cv2
 
 class KerasHandler:
     def __init__(self):
@@ -21,8 +22,12 @@ class KerasHandler:
         functor = K.function([inp], outputs)
         self.middle_layers = functor([img])
 
+        self.max_per_layer = [np.amax(layer) for layer in self.middle_layers]
+
     def whole_image(self):
-        fig, ax = plt.subplots()
+        
+        plt.rcParams['toolbar'] = 'None'
+        fig, ax = plt.subplots(num="Clasificacion de imagen")
         
         values = [round(t_uple[2]*100,2) for t_uple in self.predictions]
         y_pos = np.arange(len(self.predictions))
@@ -32,7 +37,6 @@ class KerasHandler:
         ax.set_yticks(y_pos)
         ax.set_yticklabels(names)
         ax.invert_yaxis()
-
         plt.show()
 
     def get_useful_layers_names(self):
@@ -45,5 +49,9 @@ class KerasHandler:
         idx = utils.find_layer_idx(self.model, name)
         return get_num_filters(self.model.layers[idx])
 
-        
-    
+    def get_img_activations(self, name, filter):
+        idx = utils.find_layer_idx(self.model, name)
+        aux = self.middle_layers[idx][0,:,:,filter] * (255.0/np.amax(self.middle_layers[idx][0,:,:,filter]))#self.max_per_layer[idx])
+        aux = np.expand_dims(aux, axis=2)
+        aux = aux.astype(np.uint8)
+        return cv2.resize(aux, (224,224))

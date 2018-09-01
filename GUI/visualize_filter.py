@@ -1,5 +1,8 @@
 from tkinter import *
 from tkinter import ttk
+import numpy as np
+import PIL.Image, PIL.ImageTk
+import cv2
 
 class VisualizeFilter():
     def __init__(self, root):
@@ -43,6 +46,13 @@ class VisualizeFilter():
             self.button['state'] = DISABLED
 
     def ok(self):
-
+        img = self.root.keras_handler.get_img_activations(self.combo.get(),int(self.entry_value.get()))
+        self.canvas_frame = Toplevel()
+        self.canvas_frame.title(self.combo.get() + ":" + self.entry_value.get())
+        self.canvas = Canvas(self.canvas_frame, width=224, height=224)
+        self.canvas.pack(side=TOP)
+        self.img = PIL.ImageTk.PhotoImage(image=PIL.Image.fromarray(img))
+        self.canvas.create_image(0,0,image=self.img,anchor=NW)
         self.dialog.destroy()
+
         
