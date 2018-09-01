@@ -6,15 +6,19 @@ import PIL.Image, PIL.ImageTk
 from canvas import MainCanvas
 from keras_handler import KerasHandler
 from visualize_filter import VisualizeFilter
+from config_parser import ConfigParser
+from tkinter import ttk
+from bottom_combos import BottomCombos
 
 class MainWindow():
     def __init__(self):
         self.keras_handler = KerasHandler()
 
+        self.filters_config = ConfigParser.parse("GUI/filters.json")
+
         self.root = Tk()
         self.root.title("TFG Pablo Pastor Martín")
         self.root.resizable(0,0)
-
         menubar = Menu(self.root)
         menu1 = Menu(menubar, tearoff=0)
         menu1.add_command(label="Open image", command=self.openfile)
@@ -25,10 +29,10 @@ class MainWindow():
         menu3 = Menu(menubar, tearoff=0)
         menubar.add_cascade(label="Ayuda", menu=menu3)
         menu3.add_command(label="About...", command=self.info)
-
         self.root.config(menu=menubar)
-
         self.mainCanvas = MainCanvas(self) 
+
+        self.create_combos()
 
         self.root.mainloop()
 
@@ -47,6 +51,9 @@ class MainWindow():
 
     def visualize_filter(self):
         VisualizeFilter(self)
+
+    def create_combos(self):
+        BottomCombos(self)
 
 
 def main():
