@@ -25,12 +25,16 @@ class BottomCombos:
             self.combo_feature["values"] = [value for value in self.config[index]]
             self.combo_feature["state"] = "readonly"
             self.current_block = index
+            self.root.mainCanvas.zoom_level = int(index) - 1
+            self.combo_feature.selection_clear()
         else:
             self.combo_feature["state"] = "disabled"
+            self.root.mainCanvas.zoom_level = -1
 
     def filter_selected(self, event):
         filt = self.config[self.current_block][self.combo_feature.get()]
         layer, number = filt.split(":")
         number = int(number)
+        self.root.mainCanvas.new_target_activation(self.root.keras_handler.get_activations(layer,number))
 
     

@@ -55,3 +55,8 @@ class KerasHandler:
         aux = np.expand_dims(aux, axis=2)
         aux = aux.astype(np.uint8)
         return cv2.resize(aux, (224,224))
+
+    def get_activations(self, name, filter):
+        idx = utils.find_layer_idx(self.model, name)
+        aux = self.middle_layers[idx][0,:,:,filter] * (100/np.amax(self.middle_layers[idx][0,:,:,filter]))
+        return aux

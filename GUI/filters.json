@@ -3,8 +3,8 @@
   "2": {
     "Horizontal": "block2_conv2:25",
     "Vertical": "block2_conv2:12",
-    "Diagonal 1 (/)": "block2_conv2:105",
-    "Diagonal 2 (\\)": "block2_conv2:113"
+    "Diagonal 1 (/)": "block2_conv2:113",
+    "Diagonal 2 (\\)": "block2_conv2:105"
   },
   "3": {
     "h": "",
